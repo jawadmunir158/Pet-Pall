@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/donate" element={<Donate />} />
           <Route path="/donateUs" element={<DonateUs />} />
           <Route path="/docpanel" element={<Docpanel />} />
-          <Route path="/reshedule" element={<ResheduleAppointment />} />
+          <Route path="/reschedule" element={<ResheduleAppointment />} />
           <Route path="/user" element={<UserAppointment />} />
           <Route path="/loginP" element={<LoginPage />} />
           <Route path="/verify" element={<Verify />} />
