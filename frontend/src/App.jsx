@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom'; // ❌ Remove BrowserRouter
 import Home from './pages/Home';
 import Collection from './pages/Collection';
 import About from './pages/About';
@@ -8,6 +9,11 @@ import Placeorder from './pages/Placeorder';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Orders from './pages/Orders';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import SearchBar from './components/SearchBar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Ai from './pages/Ai';
 import Appointment from './pages/Appointment';
 import DonateUs from './pages/DonateUs';
@@ -16,50 +22,48 @@ import Doctors from './pages/Doctors';
 import Doc1Schedule from './pages/Doc1Schedule';
 import Doc2Schedule from './pages/Doc2Schedule';
 import Choose from './pages/Choose';
-import RescheduleAppointment from './pages/RescheduleAppointment'; // ✅ renamed from "Reshedule"
-import Userappointment from './pages/userappointment'; // ✅ match file name exactly
-import Docpanel from './pages/Docpanel'; // ✅ match case
-import Loginpage from './pages/Loginpage'; // ✅ match case
+import { ThemeProvider } from './context/ThemeContext';
+import RescheduleAppointment from './pages/RescheduleAppointment';
+import UserAppointment from './pages/userAppointment';
+import Docpanel from "./pages/Docpanel";
+import LoginPage from './pages/Loginpage';
 import Verify from './pages/verify';
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import SearchBar from './components/SearchBar';
-
-function App() {
+const App = () => {
   return (
-    <div>
-      <BrowserRouter>
+    <ThemeProvider>
+      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+        <ToastContainer />
         <Navbar />
         <SearchBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/collection" element={<Collection />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/placeorder" element={<Placeorder />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/orders" element={<Orders />} />
           <Route path="/ai" element={<Ai />} />
-          <Route path="/appointment" element={<Appointment />} />
-          <Route path="/donateus" element={<DonateUs />} />
-          <Route path="/donate" element={<Donate />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/product/:productId" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/placeorder" element={<Placeorder />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/doctors" element={<Doctors />} />
-          <Route path="/doc1schedule" element={<Doc1Schedule />} />
-          <Route path="/doc2schedule" element={<Doc2Schedule />} />
+          <Route path="/appointment" element={<Appointment />} />
           <Route path="/choose" element={<Choose />} />
-          <Route path="/reschedule" element={<RescheduleAppointment />} />
-          <Route path="/user" element={<Userappointment />} />
+          <Route path="/doc1Schedule" element={<Doc1Schedule />} />
+          <Route path="/doc2Schedule" element={<Doc2Schedule />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/donateUs" element={<DonateUs />} />
           <Route path="/docpanel" element={<Docpanel />} />
-          <Route path="/loginpage" element={<Loginpage />} />
+          <Route path="/reschedule" element={<RescheduleAppointment />} />
+          <Route path="/user" element={<UserAppointment />} />
+          <Route path="/loginP" element={<LoginPage />} />
           <Route path="/verify" element={<Verify />} />
         </Routes>
         <Footer />
-      </BrowserRouter>
-    </div>
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
