@@ -24,7 +24,7 @@ import Doc2Schedule from './pages/Doc2Schedule';
 import Choose from './pages/Choose';
 import { ThemeProvider } from './context/ThemeContext';
 import ResheduleAppointment from './pages/ResheduleAppointment';
-import UserAppointment from './pages/userAppointment';
+import Userappointment from './pages/Userappointment'; // ✅ Matches file name
 import Docpanel from "./pages/Docpanel";
 import LoginPage from './pages/Loginpage';
 import Verify from './pages/verify';
