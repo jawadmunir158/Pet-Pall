@@ -26,7 +26,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import ResheduleAppointment from './pages/ResheduleAppointment';
 import Userappointment from './pages/Userappointment'; // ✅ Matches file name
 import Docpanel from "./pages/Docpanel";
-import LoginPage from './pages/Loginpage';
+import LoginPage from './pages/LoginPage';
 import Verify from './pages/verify';
 
 const App = () => {
