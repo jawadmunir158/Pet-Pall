@@ -24,7 +24,7 @@ import Doc2Schedule from './pages/Doc2Schedule';
 import Choose from './pages/Choose';
 import { ThemeProvider } from './context/ThemeContext';
 import RescheduleAppointment from './pages/ResheduleAppointment';
-import UserAppointment from './pages/userAppointment';
+import Userappointment from './pages/userappointment';
 import Docpanel from "./pages/Docpanel";
 import LoginPage from './pages/Loginpage';
 import Verify from './pages/verify';
@@ -56,7 +56,7 @@ const App = () => {
           <Route path="/donateUs" element={<DonateUs />} />
           <Route path="/docpanel" element={<Docpanel />} />
           <Route path="/reschedule" element={<RescheduleAppointment />} />
-          <Route path="/user" element={<UserAppointment />} />
+          <Route path="/user" element={<Userappointment />} />
           <Route path="/loginP" element={<LoginPage />} />
           <Route path="/verify" element={<Verify />} />
         </Routes>
