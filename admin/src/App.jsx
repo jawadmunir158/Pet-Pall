@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
-import Sidebar from './components/sidebar'
+import Sidebar from './components/Sidebar'
 import {Route, Routes } from 'react-router-dom'
 import List from './pages/List'
 import Add from './pages/Add'
@@ -8,6 +8,7 @@ import Orders from './pages/Orders'
 import Login from './components/Login'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Doctor from './pages/Doctor'
 
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -39,7 +40,7 @@ const App = () => {
         <Route path='/add' element={<Add token={token} />} />
         <Route path='/list' element={<List token={token} />} />
         <Route path='/orders' element={<Orders token={token} />} />
-
+        <Route path='/doctor' element={<Doctor token={token} />} />      
         </Routes>
 
 

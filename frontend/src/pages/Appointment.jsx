@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Title from '../components/Title';
-import emailjs from '@emailjs/browser';
+import axios from 'axios';
+import { ShopContext } from '../context/ShopContext'; // Context to access backend URL and token
 
 const Appointment = () => {
+  const { token, backendUrl } = useContext(ShopContext); // Get token and backend URL from context
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -23,61 +26,58 @@ const Appointment = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullName, email } = formData;
 
-    if (!fullName || !email) {
-      toast.error('Please fill all fields');
-      return;
+    // Check if all required fields are filled
+    const requiredFields = ['fullName', 'email', 'petAge', 'petBreed', 'selectedDoctor', 'petType', 'serviceType'];
+    for (let field of requiredFields) {
+      if (!formData[field]) {
+        toast.error(`Please fill all fields`);
+        return;
+      }
     }
 
-    // Prepare template parameters for the message
-    const templateParams = {
-      from_name: fullName,
-      from_email: email,
-      message: `Hello ${fullName}, your appointment has been successfully booked!`,
-      pet_age: formData.petAge,
-      pet_breed: formData.petBreed,
-      selected_doctor: formData.selectedDoctor,
-      pet_type: formData.petType,
-      service_type: formData.serviceType,
-      medications: formData.medications,
-      previous_conditions: formData.previousConditions,
-      condition_info: formData.conditionInfo,
-      to_email: email, // Ensure that this is set correctly
-    };
+    try {
+      // Ensure token is available before sending the request
+      if (!token) {
+        toast.error('No token found. Please log in.');
+        return;
+      }
 
-    console.log('Template Parameters:', templateParams); // Debugging output
-
-    // Send email using EmailJS
-    emailjs
-      .send('service_s5rjrdw', 'template_kn0m36k', templateParams, 'AJNKx2IBF6i0NqUOH')
-      .then(
-        (response) => {
-          console.log('SUCCESS!', response.status, response.text);
-          toast.success('Appointment booked successfully! A confirmation email has been sent.');
-
-          // Reset form data only on success
-          setFormData({
-            fullName: '',
-            email: '',
-            petAge: '',
-            petBreed: '',
-            selectedDoctor: '',
-            petType: '',
-            serviceType: '',
-            medications: '',
-            previousConditions: '',
-            conditionInfo: '',
-          });
-        },
-        (err) => {
-          console.error('FAILED...', err);
-          toast.error('There was an error. Please try again later.');
-          // Do not reset form data here
-        }
+      // Send the POST request with the token in the headers
+      const response = await axios.post(
+        `${backendUrl}/api/appointments`, // Endpoint for appointments
+        formData,
+        { headers: { token } } // Include token in the request headers
       );
+
+      if (response.status === 200) {
+        toast.success('Appointment booked successfully!');
+        
+        // Optionally store the token if not already in localStorage
+        if (token && !localStorage.getItem('token')) {
+          localStorage.setItem('token', token);
+        }
+
+        // Reset form data after successful submission
+        setFormData({
+          fullName: '',
+          email: '',
+          petAge: '',
+          petBreed: '',
+          selectedDoctor: '',
+          petType: '',
+          serviceType: '',
+          medications: '',
+          previousConditions: '',
+          conditionInfo: '',
+        });
+      }
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      toast.error('There was an error. Please try again later.');
+    }
   };
 
   return (
@@ -104,9 +104,8 @@ const Appointment = () => {
             className="w-full p-2 border rounded"
             name="selectedDoctor"
             onChange={handleChange}
-            >
+          >
             <option value="">Please select</option>
-            <option value="Dr. Maha Ijaz">Dr. Maha Ijaz</option>
             <option value="Dr. Jawad">Dr. Jawad</option>
           </select>
         </div>
@@ -115,7 +114,7 @@ const Appointment = () => {
           <div className="mb-4">
             <label className="block text-gray-600 mb-2">What pet do you have?</label>
             <div className="grid grid-cols-3 gap-2">
-              {['Cats', 'Dogs', 'Birds', 'Rabbits', 'Horse', 'Ferrets', 'Fish', 'Guinea pig', 'Other'].map((pet) => (
+              {['Cats', 'Dogs', 'Birds',  'Other'].map((pet) => (
                 <label key={pet} className="flex items-center text-gray-700">
                   <input
                     className="mr-2"
@@ -228,16 +227,16 @@ const Appointment = () => {
               rows="4"
               value={formData.conditionInfo}
               onChange={handleChange}
-              ></textarea>
-            </div>
-  
-            <button className="w-full bg-black text-white p-2 rounded" type="submit">
-              Book Vet
-            </button>
-          </form>
-        </div>
+            ></textarea>
+          </div>
+
+          <button className="w-full bg-black text-white p-2 rounded" type="submit">
+            Book Vet
+          </button>
+        </form>
       </div>
-    );
-  };
-  
-  export default Appointment;
+    </div>
+  );
+};
+
+export default Appointment;

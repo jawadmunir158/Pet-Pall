@@ -6,6 +6,7 @@ import axios from 'axios';
 const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
   const [orderData, setorderData] = useState([]);
+  const [appointmentData, setAppointmentData] = useState([]); // New state for appointments
   const [loading, setLoading] = useState(false);
 
   const loadOrderData = async () => {
@@ -47,8 +48,31 @@ const Orders = () => {
     }
   };
 
+  const loadAppointmentData = async () => {
+    try {
+      setLoading(true);
+  
+      if (!token) return;
+  
+      const response = await axios.get(backendUrl + '/api/appointments/user', {
+        headers: { token },
+      });
+  
+      if (response.status === 200) {
+        setAppointmentData(response.data); // Already sorted by createdAt in backend
+      } else {
+        console.log('Failed to load appointments');
+      }
+    } catch (error) {
+      console.log('Error loading appointments:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   useEffect(() => {
     loadOrderData();
+    loadAppointmentData(); // Load appointments data as well
   }, [token]);
 
   return (
@@ -113,6 +137,60 @@ const Orders = () => {
           </div>
         ))}
       </div>
+
+      {/* My Appointments Table */}
+      {/* My Appointments Table */}
+      <div className='mt-8'>
+        <div className='text-2xl'>
+          <Title text1={'MY'} text2={'APPOINTMENTS'} />
+        </div>
+
+        <div className='overflow-x-auto mt-4 rounded-xl shadow-lg border border-gray-200'>
+          <table className='min-w-full bg-white rounded-xl overflow-hidden'>
+            <thead>
+              <tr className='bg-gradient-to-r from-purple-500 to-pink-500 text-white text-left'>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Doctor</th>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Pet Breed</th>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Pet Type</th>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Service</th>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Created At</th>
+                <th className='py-3 px-5 font-semibold tracking-wide'>Status</th> {/* New Column */}
+              </tr>
+            </thead>
+            <tbody>
+              {appointmentData.map((appointment, index) => (
+                <tr
+                  key={index}
+                  className={`transition duration-300 ${index % 2 === 0 ? 'bg-purple-50' : 'bg-pink-50'
+                    } hover:bg-yellow-100`}
+                >
+                  <td className='py-3 px-5 text-gray-700'>{appointment.selectedDoctor}</td>
+                  <td className='py-3 px-5 text-gray-700'>{appointment.petBreed}</td>
+                  <td className='py-3 px-5 text-gray-700'>{appointment.petType}</td>
+                  <td className='py-3 px-5 text-gray-700'>{appointment.serviceType}</td>
+                  <td className='py-3 px-5 text-gray-700'>
+                    {new Date(appointment.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className='py-3 px-5 text-gray-700'>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${appointment.status === 'Accepted'
+                          ? 'bg-green-200 text-green-800'
+                          : appointment.status === 'Declined'
+                            ? 'bg-red-200 text-red-800'
+                            : 'bg-yellow-200 text-yellow-800'
+                        }`}
+                    >
+                      {appointment.status}
+                    </span>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   );
 };

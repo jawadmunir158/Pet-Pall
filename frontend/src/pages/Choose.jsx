@@ -1,18 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-// Import FontAwesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
-// Sample doctor data with Dr. Maha Ijaz and Dr. Jawad
+// Sample doctor data with only Dr. Jawad
 const doctors = [
-  {
-    name: 'Dr. Maha Ijaz',
-    image: 'https://media-mct1-1.cdn.whatsapp.net/v/t61.24694-24/472011552_486121977449881_6334751090301795523_n.jpg?ccb=11-4&oh=01_Q5AaID3tiALxejiSs25y6nvW3GV5AKEydFk6usGkUWQr0QHj&oe=678E45E6&_nc_sid=5e03e0&_nc_cat=103',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. WC, Inventore',
-    scheduleLink: '/Doc1Schedule', // Link for Dr. Maha's schedule
-  },
   {
     name: 'Dr. Jawad',
     image: 'https://avatars.githubusercontent.com/u/127825377?v=4', // Replace with actual image URL
@@ -41,13 +33,14 @@ const DoctorCard = ({ doctor }) => (
         <FontAwesomeIcon icon={faInstagram} />
       </a>
     </div>
+    {/* Buttons Section */}
     <div className="flex justify-center space-x-4 mt-4">
       <Link to={doctor.scheduleLink}>
         <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
           Check Schedule
         </button>
       </Link>
-      <Link to="/Appointment">
+      <Link to={{ pathname: "/appointment", state: { doctor } }}>
         <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
           Book Appointment
         </button>
@@ -67,7 +60,7 @@ const Choose = () => {
         </p>
       </div>
       <div className="flex flex-wrap justify-center">
-      {doctors.map((doctor, index) => (
+        {doctors.map((doctor, index) => (
           <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
             <DoctorCard doctor={doctor} />
           </div>

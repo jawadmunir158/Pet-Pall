@@ -19,14 +19,9 @@ import Appointment from './pages/Appointment';
 import DonateUs from './pages/DonateUs';
 import Donate from './pages/Donate';
 import Doctors from './pages/Doctors';
-import Doc1Schedule from './pages/Doc1Schedule';
 import Doc2Schedule from './pages/Doc2Schedule';
 import Choose from './pages/Choose';
 import { ThemeProvider } from './context/ThemeContext';
-import ResheduleAppointment from './pages/ResheduleAppointment';
-import Userappointment from './pages/Userappointment'; // ✅ Matches file name
-import Docpanel from "./pages/Docpanel";
-import LoginPage from './pages/LoginPage';
 import Verify from './pages/Verify';
 
 const App = () => {
@@ -50,14 +45,9 @@ const App = () => {
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/choose" element={<Choose />} />
-          <Route path="/doc1Schedule" element={<Doc1Schedule />} />
           <Route path="/doc2Schedule" element={<Doc2Schedule />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/donateUs" element={<DonateUs />} />
-          <Route path="/docpanel" element={<Docpanel />} />
-          <Route path="/reschedule" element={<ResheduleAppointment />} />
-          <Route path="/user" element={<Userappointment />} />
-          <Route path="/loginP" element={<LoginPage />} />
           <Route path="/verify" element={<Verify />} />
         </Routes>
         <Footer />

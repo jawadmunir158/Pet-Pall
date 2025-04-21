@@ -44,10 +44,9 @@ const Add = ( {token}) => {
       setImage(file); // Set the file object for FormData
     }
   };
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
+  
     try {
       const formData = new FormData();
       formData.append('name', name);
@@ -55,36 +54,35 @@ const Add = ( {token}) => {
       formData.append('price', price);
       formData.append('category', selectedCategory);
       formData.append('subCategory', selectedSubCategory);
-      formData.append('isBestSeller', isBestSeller);
-
-      // Append image files to FormData if they exist
-       image1 && formData.append('image1', image1);
+      formData.append('bestseller', isBestSeller); // ✅ fixed key
+  
+      image1 && formData.append('image1', image1);
       image2 && formData.append('image2', image2);
       image3 && formData.append('image3', image3);
       image4 && formData.append('image4', image4);
-
-      // Make API request (replace URL with your actual API endpoint)
-      const response = await axios.post(backendUrl + "/api/product/add" ,formData , {headers:{token}})
-       
-      
+  
+      const response = await axios.post(backendUrl + "/api/product/add", formData, {
+        headers: { token },
+      });
+  
       if (response.data.success) {
-      toast.success(response.data.message)
-      setName('')
-      setDescription('')
-      setImage1('')
-      setImage2('')
-      setImage3('')
-      setImage4('')
-      setPrice('')
-
+        toast.success(response.data.message);
+        setName('');
+        setDescription('');
+        setPrice('');
+        setImage1('');
+        setImage2('');
+        setImage3('');
+        setImage4('');
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
+  
 
   return (
     <form className="flex flex-col w-full items-start gap-3" onSubmit={onSubmitHandler}>
