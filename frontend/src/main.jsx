@@ -8,7 +8,7 @@ import './index.css'; // Your CSS
 import ShopContextProvider from './context/ShopContext.jsx'; // Your context provider
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename="/Pets/"> {/* Set basename here */}
+  <BrowserRouter>
     <ShopContextProvider>
       <App />
     </ShopContextProvider>
