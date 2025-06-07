@@ -163,5 +163,24 @@ const updateStatus = async (req,res) => {
   }
 
 }
- 
-export {verifyStripe,placeOrder,placeOrderStripe,allOrders,userOrders,updateStatus}
+
+const deleteAllOrders = async (req, res) => {
+  try {
+    await orderModel.deleteMany({});
+    res.json({ success: true, message: 'All orders deleted successfully' });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
+export {
+  verifyStripe,
+  placeOrder,
+  placeOrderStripe,
+  allOrders,
+  userOrders,
+  updateStatus,
+  deleteAllOrders // 👈 add this
+};

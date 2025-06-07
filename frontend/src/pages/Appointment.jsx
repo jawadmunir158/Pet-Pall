@@ -3,10 +3,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Title from '../components/Title';
 import axios from 'axios';
-import { ShopContext } from '../context/ShopContext'; // Context to access backend URL and token
+import { ShopContext } from '../context/ShopContext';
 
 const Appointment = () => {
-  const { token, backendUrl } = useContext(ShopContext); // Get token and backend URL from context
+  const { token, backendUrl } = useContext(ShopContext);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -29,38 +29,40 @@ const Appointment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all required fields are filled
     const requiredFields = ['fullName', 'email', 'petAge', 'petBreed', 'selectedDoctor', 'petType', 'serviceType'];
     for (let field of requiredFields) {
       if (!formData[field]) {
-        toast.error(`Please fill all fields`);
+        toast.error('Please fill all fields');
         return;
       }
     }
 
+    // Gmail-specific validation
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!gmailRegex.test(formData.email)) {
+      toast.error('Please enter a valid Gmail address');
+      return;
+    }
+
     try {
-      // Ensure token is available before sending the request
       if (!token) {
         toast.error('No token found. Please log in.');
         return;
       }
 
-      // Send the POST request with the token in the headers
       const response = await axios.post(
-        `${backendUrl}/api/appointments`, // Endpoint for appointments
+        `${backendUrl}/api/appointments`,
         formData,
-        { headers: { token } } // Include token in the request headers
+        { headers: { token } }
       );
 
       if (response.status === 200) {
         toast.success('Appointment booked successfully!');
-        
-        // Optionally store the token if not already in localStorage
+
         if (token && !localStorage.getItem('token')) {
           localStorage.setItem('token', token);
         }
 
-        // Reset form data after successful submission
         setFormData({
           fullName: '',
           email: '',
@@ -104,6 +106,7 @@ const Appointment = () => {
             className="w-full p-2 border rounded"
             name="selectedDoctor"
             onChange={handleChange}
+            value={formData.selectedDoctor}
           >
             <option value="">Please select</option>
             <option value="Dr. Jawad">Dr. Jawad</option>
@@ -114,7 +117,7 @@ const Appointment = () => {
           <div className="mb-4">
             <label className="block text-gray-600 mb-2">What pet do you have?</label>
             <div className="grid grid-cols-3 gap-2">
-              {['Cats', 'Dogs', 'Birds',  'Other'].map((pet) => (
+              {['Cats', 'Dogs', 'Birds', 'Other'].map((pet) => (
                 <label key={pet} className="flex items-center text-gray-700">
                   <input
                     className="mr-2"
@@ -122,6 +125,7 @@ const Appointment = () => {
                     type="radio"
                     value={pet}
                     onChange={handleChange}
+                    checked={formData.petType === pet}
                   />
                   {pet}
                 </label>
@@ -135,6 +139,7 @@ const Appointment = () => {
               className="w-full p-2 border rounded"
               name="serviceType"
               onChange={handleChange}
+              value={formData.serviceType}
             >
               <option value="">Please select</option>
               <option value="General Checkup">General Checkup</option>
@@ -147,16 +152,14 @@ const Appointment = () => {
 
           <div className="mb-4">
             <label className="block text-gray-600 mb-2">Your name:</label>
-            <div className="grid grid-cols-2 gap-2">
-              <input
-                className="p-2 border rounded"
-                name="fullName"
-                placeholder="Full Name"
-                type="text"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
+            <input
+              className="w-full p-2 border rounded"
+              name="fullName"
+              placeholder="Full Name"
+              type="text"
+              value={formData.fullName}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="mb-4">
@@ -164,7 +167,7 @@ const Appointment = () => {
             <input
               className="w-full p-2 border rounded"
               name="email"
-              placeholder="Your email address"
+              placeholder="Your Gmail address"
               type="email"
               value={formData.email}
               onChange={handleChange}

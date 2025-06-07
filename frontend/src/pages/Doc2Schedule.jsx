@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Title from '../components/Title';
 
@@ -49,8 +50,16 @@ const Doc2Schedule = () => {
           <p className="text-gray-600"><strong>Experience:</strong> 10 Years</p>
         </div>
 
+        {/* Book Vet Button */}
+        <div className="flex justify-end mb-4">
+          <Link to="/appointment">
+            <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
+              Book Vet
+            </button>
+          </Link>
+        </div>
+
         {/* Appointment Table */}
-        <div className="overflow-x-auto border rounded-lg">
         <div className="overflow-x-auto border rounded-lg">
           <table className="min-w-full text-sm table-auto border-collapse">
             <thead className="bg-teal-700 text-white">
@@ -81,7 +90,7 @@ const Doc2Schedule = () => {
                     key={index}
                     className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-yellow-100 transition duration-300`}
                   >
-                   <td className="p-4">{new Date(schedule.date).toLocaleDateString()}</td>
+                    <td className="p-4">{new Date(schedule.date).toLocaleDateString()}</td>
                     <td className="p-4">{schedule.time}</td>
                     <td className="p-4">{schedule.patient}</td>
                     <td className="p-4">{schedule.service}</td>
@@ -91,7 +100,6 @@ const Doc2Schedule = () => {
               )}
             </tbody>
           </table>
-        </div>
         </div>
       </div>
     </div>

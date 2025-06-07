@@ -7,11 +7,13 @@ import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/
 const doctors = [
   {
     name: 'Dr. Jawad',
-    image: 'https://avatars.githubusercontent.com/u/127825377?v=4', // Replace with actual image URL
+    image: 'https://avatars.githubusercontent.com/u/127825377?v=4',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod.',
-    scheduleLink: '/Doc2Schedule', // Link for Dr. Jawad's schedule
+    scheduleLink: '/Doc2Schedule',
   },
 ];
+
+const SOCIAL_LINK = "https://www.instagram.com/jadi_tifen?igsh=MWVkYWRiMXVla3BveA%3D%3D&utm_source=qr";
 
 // DoctorCard component
 const DoctorCard = ({ doctor }) => (
@@ -19,21 +21,24 @@ const DoctorCard = ({ doctor }) => (
     <img alt={`Portrait of ${doctor.name}`} className="w-24 h-24 rounded-full mx-auto" src={doctor.image} />
     <h2 className="text-xl font-medium mt-4">{doctor.name}</h2>
     <p className="text-gray-600 mt-2">{doctor.description}</p>
+    
+    {/* Social Icons */}
     <div className="flex justify-center space-x-4 mt-4">
-      <a className="text-gray-600 hover:text-gray-800" href="#">
+      <a className="text-gray-600 hover:text-gray-800" href={SOCIAL_LINK} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faFacebookF} />
       </a>
-      <a className="text-gray-600 hover:text-gray-800" href="#">
+      <a className="text-gray-600 hover:text-gray-800" href={SOCIAL_LINK} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faTwitter} />
       </a>
-      <a className="text-gray-600 hover:text-gray-800" href="#">
+      <a className="text-gray-600 hover:text-gray-800" href={SOCIAL_LINK} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faLinkedinIn} />
       </a>
-      <a className="text-gray-600 hover:text-gray-800" href="#">
+      <a className="text-gray-600 hover:text-gray-800" href={SOCIAL_LINK} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faInstagram} />
       </a>
     </div>
-    {/* Buttons Section */}
+
+    {/* Buttons */}
     <div className="flex justify-center space-x-4 mt-4">
       <Link to={doctor.scheduleLink}>
         <button className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">

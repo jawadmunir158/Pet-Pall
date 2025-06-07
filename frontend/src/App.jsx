@@ -19,8 +19,10 @@ import Appointment from './pages/Appointment';
 import DonateUs from './pages/DonateUs';
 import Donate from './pages/Donate';
 import Doctors from './pages/Doctors';
+import MyProfile from './pages/MyProfile';
 import Doc2Schedule from './pages/Doc2Schedule';
 import Choose from './pages/Choose';
+import Forgotpassword from './pages/Forgotpassword';
 import { ThemeProvider } from './context/ThemeContext';
 import Verify from './pages/Verify';
 
@@ -45,8 +47,10 @@ const App = () => {
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/choose" element={<Choose />} />
+          <Route path="/Forgotpassword" element={<Forgotpassword />} />
           <Route path="/doc2Schedule" element={<Doc2Schedule />} />
           <Route path="/donate" element={<Donate />} />
+          <Route path="/myProfile" element={<MyProfile />} />
           <Route path="/donateUs" element={<DonateUs />} />
           <Route path="/verify" element={<Verify />} />
         </Routes>

@@ -42,24 +42,24 @@ const Login = () => {
         try {
             if (currentState === 'Sign Up') {
                 const response = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
-                  if (response.data.success) {
+                if (response.data.success) {
                     setToken(response.data.token)
-                    localStorage.setItem('token' , response.data.token)
-                  }
-                  else {
+                    localStorage.setItem('token', response.data.token)
+                }
+                else {
                     toast.error(response.data.message)
                 }
-                
+
             } else {
-                const response = await axios.post(backendUrl + '/api/user/login' , {email,password})
-              if (response.data.success) {
-                  setToken(response.data.token)
-                  localStorage.setItem('token' , response.data.token)
-              }
-              else{
-                toast.error(response.data.message)
-              }
-                
+                const response = await axios.post(backendUrl + '/api/user/login', { email, password })
+                if (response.data.success) {
+                    setToken(response.data.token)
+                    localStorage.setItem('token', response.data.token)
+                }
+                else {
+                    toast.error(response.data.message)
+                }
+
             }
         } catch (error) {
             console.error("Error:", error);
@@ -76,11 +76,11 @@ const Login = () => {
         }
     };
 
-    useEffect(()=>{
-             if (token) {
-                navigate('/')
-             }
-    },[token])
+    useEffect(() => {
+        if (token) {
+            navigate('/')
+        }
+    }, [token])
 
     return (
         <div className="flex flex-col sm:flex-row items-center justify-center w-full">
@@ -124,15 +124,17 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-
                 <div className='w-full flex justify-between text-sm mt-[-8px] '>
-                    <p className='cursor-pointer'>Forgot Your Password?</p>
+                    <p onClick={() => navigate('/forgotpassword')} className='cursor-pointer hover:underline'>
+                        Forgot Your Password?
+                    </p>
                     {
                         currentState === 'Login'
-                            ? <p onClick={() => setCurrentState('Sign Up')} className='cursor-pointer'>Create Account</p>
-                            : <p onClick={() => setCurrentState('Login')} className='cursor-pointer'>Login Here</p>
+                            ? <p onClick={() => setCurrentState('Sign Up')} className='cursor-pointer hover:underline'>Create Account</p>
+                            : <p onClick={() => setCurrentState('Login')} className='cursor-pointer hover:underline'>Login Here</p>
                     }
                 </div>
+
                 <button className='bg-black text-white font-light px-8 py-2 mt-4'>
                     {currentState === 'Login' ? 'Sign In' : 'Sign Up'}
                 </button>

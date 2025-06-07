@@ -77,8 +77,11 @@ const Navbar = () => {
           
         </ul>
 
+
         <div className='flex items-center gap-6'>
-          <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="Search Icon" />
+        <Link to="/collection" onClick={() => setShowSearch(true)}>
+  <img src={assets.search_icon} className='w-5 cursor-pointer' alt="Search Icon" />
+</Link>
 
           {/* Dark Mode Toggle with Sun and Moon Icons */}
           <button onClick={toggleDarkMode} className="flex items-center justify-center w-8 h-8 rounded-full bg-transparent border-none cursor-pointer">
@@ -96,8 +99,8 @@ const Navbar = () => {
             {token && 
             <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
               <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
-                <p className='cursor-pointer hover:text-black'>My Profile</p>
-                <p onClick={()=>navigate('/orders')} className='cursor-pointer hover:text-black'>Orders</p>
+                <p onClick={()=>navigate('/myProfile')} className='cursor-pointer hover:text-black'>My Profile</p>
+                <p onClick={()=>navigate('/orders')} className='cursor-pointer hover:text-black'>Orders & Appointments</p>
                 <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
               </div>
             </div>}

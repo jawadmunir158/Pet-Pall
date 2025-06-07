@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';  // Import Link from react-router-dom
 import { assets } from '../assets/frontend_assets/assets';
-import { useTheme } from '../context/ThemeContext'; // Import the ThemeContext
+import { useTheme } from '../context/ThemeContext';
 
 const Footer = () => {
-  const { darkMode } = useTheme(); // Get the darkMode state from the ThemeContext
+  const { darkMode } = useTheme();
 
-  // Conditionally set the logo image based on the darkMode state
   const logoSrc = darkMode ? assets.logodark : assets.logo;
 
   return (
-    <div className=''>
+    <div>
       <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
         <div>
           <img src={logoSrc} className='mb-5 w-32' alt="Logo" />
@@ -20,10 +20,10 @@ const Footer = () => {
         <div>
           <p className='text-xl font-medium mb-5'> COMPANY </p>
           <ul className='flex flex-col gap-1 text-gray-600'>
-            <li>Home</li>
-            <li>About</li>
-            <li>Delivery</li>
-            <li>Privacy Policy</li>
+            <li><Link to="/" className="hover:underline">Home</Link></li>
+            <li><Link to="/about" className="hover:underline">About</Link></li>
+            <li><Link to="/doctors" className="hover:underline">Doctor</Link></li>
+            <li><Link to="/collection" className="hover:underline">Collection</Link></li>
           </ul>
         </div>
         <div>
@@ -37,7 +37,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className='py-5 text-sm text-center'>
-          Copyright 2024@ forever.com all Right Reserved 
+          Copyright 2025@ PetPall.com all Right Reserved 
         </p>
       </div>
     </div>
